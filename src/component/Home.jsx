@@ -15,22 +15,18 @@ const Home = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
-        set_User_Data();
+        const res = getDoc(doc(db, "users", user.uid));
+        setDoc(doc(db, "users", user.uid), {
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          uid: user.uid,
+        });
       } else {
         navigate("/signin");
       }
     });
   }, []);
-
-  const set_User_Data = async () => {
-    const res = await getDoc(doc(db, "users", user.uid));
-    await setDoc(doc(db, "users", user.uid), {
-        name: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL,
-        uid: user.uid,
-    });
-  }
 
   const onLogout = async () => {
     await signOut(auth);
