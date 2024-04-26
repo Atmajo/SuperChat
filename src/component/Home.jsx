@@ -36,13 +36,15 @@ const Home = () => {
   };
 
   return (
-    <main className="flex flex-col gap-2 h-[750px] my-20 mx-32 p-3 border rounded-lg bg-gray-400/15">
+    <main className="flex flex-col gap-2 h-[750px] my-10 min-[750px]:my-20 mx-4 min-[750px]:mx-32 p-3 border rounded-lg bg-gray-400/15">
       <nav className="flex flex-row justify-between items-center py-4 px-3">
         <h1 className="text-2xl font-semibold">ChatApp</h1>
         <ul className="flex items-center gap-10">
-          <li>
-            <button>Search</button>
-          </li>
+          {
+            // <li>
+            // <button>Search</button>
+            // </li>
+          }
           <li>
             <button onClick={onLogout}>Log Out</button>
           </li>
