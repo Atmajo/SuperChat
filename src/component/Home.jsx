@@ -22,7 +22,7 @@ const Home = () => {
     });
   }, []);
 
-  const set_User_Data = async (user) => {
+  const set_User_Data = async () => {
     const res = await getDoc(doc(db, "users", user.uid));
     await setDoc(doc(db, "users", user.uid), {
         name: user.displayName,
