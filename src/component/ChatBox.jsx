@@ -10,13 +10,14 @@ import {
   doc,
   orderBy,
   query,
+  where,
 } from "firebase/firestore";
 import { v4 } from "uuid";
 import EmojiPicker from "emoji-picker-react";
 
 const db = getFirestore(app);
 
-const ChatBox = ({ user, setOpened }) => {
+const ChatBox = ({ user, setOpened, revUID }) => {
   return (
     <div className="flex flex-col w-[60%] p-2 border rounded-lg">
       <nav className="flex justify-between items-center p-2 ">
@@ -32,41 +33,41 @@ const ChatBox = ({ user, setOpened }) => {
       </nav>
       <div className="flex flex-col justify-start">
         <div className="p-2">
-          <ChatRoom />
+          <ChatRoom revUID={revUID} />
         </div>
       </div>
     </div>
   );
 };
 
-const ChatRoom = () => {
+const ChatRoom = ({ revUID }) => {
   const [data, setData] = useState("");
   const [emoji, setEmoji] = useState(false);
   const [pick, setPick] = useState(null);
   const [message, setMessage] = useState({
     message: "",
   });
-
+  
   const getData = async () => {
-    const q = query(collection(db, "chats"), orderBy("createdAt"));
+    const q = query(collection(db, "chats"), orderBy("createdAt"), where("msgTag", "==", auth.currentUser.uid+revUID));
     const querySnapshot = await getDocs(q);
     const messageRef = querySnapshot.docs.map((doc) => doc.data());
     return messageRef;
   };
-
+  
   useEffect(() => {
     const fetchData = async () => {
       const response = await getData();
       setData(response);
     };
-
+    
     fetchData();
   }, [data]);
-
+  
   if (!data) {
     return <div>Loading...</div>;
   }
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setMessage((prev) => ({
@@ -74,7 +75,7 @@ const ChatRoom = () => {
       [name]: value,
     }));
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -82,13 +83,15 @@ const ChatRoom = () => {
     await setDoc(doc(db, "chats", v4()), {
       text: message.message,
       photoURL: photoURL,
-      uid: uid,
+      currentUID: uid,
+      previousUID: revUID,
+      msgTag: uid+revUID,
       createdAt: serverTimestamp(),
     });
-
+    
     setMessage({ message: "" });
   };
-
+  
   return (
     <div className="h-[550px] flex flex-col justify-end w-full relative">
       <div className="z-0">
@@ -96,7 +99,7 @@ const ChatRoom = () => {
           <ChatMessage
             key={index}
             data={message.text}
-            uid={message.uid}
+            uid={message.currentUID}
             photoURL={message.photoURL}
           />
         ))}

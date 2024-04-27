@@ -7,6 +7,7 @@ const List = () => {
   const [opened, setOpened] = useState(false);
   const [user, setUser] = useState([]);
   const [users, setUsers] = useState("");
+  const [ revUID, setRevUID ] = useState("");
   const time = new Date().toLocaleTimeString();
 
   const db = getFirestore(app);
@@ -38,6 +39,7 @@ const List = () => {
                 onClick={() => {
                   setOpened(true);
                   setUser(user);
+                  setRevUID(user.uid);
                 }}
               >
                 <div className="flex items-center gap-5">
@@ -53,7 +55,7 @@ const List = () => {
         )}
       </div>
       {opened ? (
-        <Chatbox user={user} setOpened={setOpened} />
+        <Chatbox user={user} revUID={revUID} setOpened={setOpened} />
       ) : (
         <div className="flex flex-col w-[60%] p-2 border rounded-lg"></div>
       )}
