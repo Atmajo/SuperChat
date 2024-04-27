@@ -15,16 +15,6 @@ const Home = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
-        const res = getDoc(doc(db, "users", user.uid)).then((docSnap) => {
-          if (!docSnap.exists()) {
-            setDoc(doc(db, "users", user.uid), {
-              name: user.displayName,
-              email: user.email,
-              photoURL: user.photoURL,
-              uid: user.uid,
-            });
-          }
-        });
       } else {
         navigate("/signin");
       }
