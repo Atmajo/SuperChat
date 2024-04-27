@@ -26,9 +26,9 @@ const ChatBox = ({ user, setOpened, revUID }) => {
           <img
             src={user.photoURL}
             alt="profile"
-            className="rounded-full w-10"
+            className="rounded-full w-6 md:w-10 lg:w-10"
           />
-          <h1>{user.name}</h1>
+          <h1 className="text-sm md:text-lg lg:text-lg">{user.name}</h1>
         </div>
       </nav>
       <div className="flex flex-col justify-start">

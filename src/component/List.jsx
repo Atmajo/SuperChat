@@ -42,13 +42,13 @@ const List = () => {
                   setRevUID(user.uid);
                 }}
               >
-                <div className="flex items-center gap-5">
+                <div className="flex items-center gap-2 md:gap-5 lg:gap-5">
                   <img
                     src={user.photoURL}
                     alt="profile"
-                    className="rounded-full w-10"
+                    className="rounded-full w-6 md:w-10 lg:w-10"
                   />
-                  <h1>{user.name}</h1>
+                  <h1 className="text-sm md:text-lg lg:text-lg">{user.name}</h1>
                 </div>
               </div>
             )
