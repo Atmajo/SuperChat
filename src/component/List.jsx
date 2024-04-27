@@ -29,7 +29,7 @@ const List = () => {
 
   return (
     <div className="flex h-[630px] gap-2">
-      <div className="flex flex-col w-[40%]">
+      <div className={`flex-col md:w-[40%] lg:w-[40%] ${opened ? "hidden" : "flex w-[100%]"}`}>
         {Object.values(users).map(
           (user, index) =>
             user.uid !== auth.currentUser.uid && (
@@ -57,7 +57,7 @@ const List = () => {
       {opened ? (
         <Chatbox user={user} revUID={revUID} setOpened={setOpened} />
       ) : (
-        <div className="flex flex-col w-[60%] p-2 border rounded-lg"></div>
+        <div className={`flex-col ${!opened ? "hidden" : "flex w-[100%]"} lg:w-[60%] p-2 border rounded-lg`}></div>
       )}
     </div>
   );

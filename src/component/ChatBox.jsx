@@ -19,7 +19,7 @@ const db = getFirestore(app);
 
 const ChatBox = ({ user, setOpened, revUID }) => {
   return (
-    <div className="flex flex-col w-[60%] p-2 border rounded-lg">
+    <div className="flex flex-col w-[100%] md:w-[60%] lg:w-[60%] p-2 border rounded-lg">
       <nav className="flex justify-between items-center p-2 ">
         <div className="flex gap-3 items-center">
           <button onClick={() => setOpened(false)}>{"<---"}</button>
